@@ -31,39 +31,7 @@ class FindMyiPhoneServiceManager:
         This ensures that the location data is up-to-date.
 
         """
-        req = self.session.post(
-            self._fmip_refresh_url,
-            params=self.params,
-            data=json.dumps(
-                {
-                    "clientContext": {
-                        "fmly": self.with_family,
-                        "shouldLocate": True,
-                        "selectedDevice": "all",
-                        "deviceListVersion": 1,
-                    }
-                }
-            ),
-        )
-        self.response = req.json()
-
-        for device_info in self.response["content"]:
-            device_id = device_info["id"]
-            if device_id not in self._devices:
-                self._devices[device_id] = AppleDevice(
-                    device_info,
-                    self.session,
-                    self.params,
-                    manager=self,
-                    sound_url=self._fmip_sound_url,
-                    lost_url=self._fmip_lost_url,
-                    message_url=self._fmip_message_url,
-                )
-            else:
-                self._devices[device_id].update(device_info)
-
-        if not self._devices:
-            raise PyiCloudNoDevicesException()
+        pass
 
     def __getitem__(self, key):
         if isinstance(key, int):
@@ -104,39 +72,25 @@ class AppleDevice:
 
     def update(self, data):
         """Updates the device data."""
-        self.content = data
+        pass
 
     def location(self):
         """Updates the device location."""
-        self.manager.refresh_client()
-        return self.content["location"]
+        pass
 
     def status(self, additional=[]):  # pylint: disable=dangerous-default-value
         """Returns status information for device.
 
         This returns only a subset of possible properties.
         """
-        self.manager.refresh_client()
-        fields = ["batteryLevel", "deviceDisplayName", "deviceStatus", "name"]
-        fields += additional
-        properties = {}
-        for field in fields:
-            properties[field] = self.content.get(field)
-        return properties
+        pass
 
     def play_sound(self, subject="Find My iPhone Alert"):
         """Send a request to the device to play a sound.
 
         It's possible to pass a custom message by changing the `subject`.
         """
-        data = json.dumps(
-            {
-                "device": self.content["id"],
-                "subject": subject,
-                "clientContext": {"fmly": True},
-            }
-        )
-        self.session.post(self.sound_url, params=self.params, data=data)
+        pass
 
     def display_message(
         self, subject="Find My iPhone Alert", message="This is a note", sounds=False
@@ -145,16 +99,7 @@ class AppleDevice:
 
         It's possible to pass a custom message by changing the `subject`.
         """
-        data = json.dumps(
-            {
-                "device": self.content["id"],
-                "subject": subject,
-                "sound": sounds,
-                "userText": True,
-                "text": message,
-            }
-        )
-        self.session.post(self.message_url, params=self.params, data=data)
+        pass
 
     def lost_device(
         self, number, text="This iPhone has been lost. Please call me.", newpasscode=""
@@ -165,23 +110,12 @@ class AppleDevice:
         been passed, then the person holding the device can call
         the number without entering the passcode.
         """
-        data = json.dumps(
-            {
-                "text": text,
-                "userText": True,
-                "ownerNbr": number,
-                "lostModeEnabled": True,
-                "trackingEnabled": True,
-                "device": self.content["id"],
-                "passcode": newpasscode,
-            }
-        )
-        self.session.post(self.lost_url, params=self.params, data=data)
+        pass
 
     @property
     def data(self):
         """Gets the device data."""
-        return self.content
+        pass
 
     def __getitem__(self, key):
         return self.content[key]

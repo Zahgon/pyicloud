@@ -15,28 +15,23 @@ class UbiquityService:
     @property
     def root(self):
         """Gets the root node."""
-        if not self._root:
-            self._root = self.get_node(0)
-        return self._root
+        pass
 
     def get_node_url(self, node_id, variant="item"):
         """Returns a node URL."""
-        return self._node_url % (self.params["dsid"], variant, node_id)
+        pass
 
     def get_node(self, node_id):
         """Returns a node."""
-        request = self.session.get(self.get_node_url(node_id))
-        return UbiquityNode(self, request.json())
+        pass
 
     def get_children(self, node_id):
         """Returns a node children."""
-        request = self.session.get(self.get_node_url(node_id, "parent"))
-        items = request.json()["item_list"]
-        return [UbiquityNode(self, item) for item in items]
+        pass
 
     def get_file(self, node_id, **kwargs):
         """Returns a node file."""
-        return self.session.get(self.get_node_url(node_id, "file"), **kwargs)
+        pass
 
     def __getattr__(self, attr):
         return getattr(self.root, attr)
@@ -57,48 +52,43 @@ class UbiquityNode:
     @property
     def item_id(self):
         """Gets the node id."""
-        return self.data.get("item_id")
+        pass
 
     @property
     def name(self):
         """Gets the node name."""
-        return self.data.get("name")
+        pass
 
     @property
     def type(self):
         """Gets the node type."""
-        return self.data.get("type")
+        pass
 
     @property
     def size(self):
         """Gets the node size."""
-        try:
-            return int(self.data.get("size"))
-        except ValueError:
-            return None
+        pass
 
     @property
     def modified(self):
         """Gets the node modified date."""
-        return datetime.strptime(self.data.get("modified"), "%Y-%m-%dT%H:%M:%SZ")
+        pass
 
     def open(self, **kwargs):
         """Returns the node file."""
-        return self.connection.get_file(self.item_id, **kwargs)
+        pass
 
     def get_children(self):
         """Returns the node children."""
-        if not self._children:
-            self._children = self.connection.get_children(self.item_id)
-        return self._children
+        pass
 
     def dir(self):
         """Returns children node directories by their names."""
-        return [child.name for child in self.get_children()]
+        pass
 
     def get(self, name):
         """Returns a child node by its name."""
-        return [child for child in self.get_children() if child.name == name][0]
+        pass
 
     def __getitem__(self, key):
         try:

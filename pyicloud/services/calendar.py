@@ -26,12 +26,7 @@ class CalendarService:
         Fetches a single event's details by specifying a pguid
         (a calendar) and a guid (an event's ID).
         """
-        params = dict(self.params)
-        params.update({"lang": "en-us", "usertz": get_localzone_name()})
-        url = f"{self._calendar_event_detail_url}/{pguid}/{guid}"
-        req = self.session.get(url, params=params)
-        self.response = req.json()
-        return self.response["Event"][0]
+        pass
 
     def refresh_client(self, from_dt=None, to_dt=None):
         """
@@ -39,48 +34,16 @@ class CalendarService:
         event data is up-to-date. If no 'from_dt' or 'to_dt' datetimes
         have been given, the range becomes this month.
         """
-        today = datetime.today()
-        first_day, last_day = monthrange(today.year, today.month)
-        if not from_dt:
-            from_dt = datetime(today.year, today.month, first_day)
-        if not to_dt:
-            to_dt = datetime(today.year, today.month, last_day)
-        params = dict(self.params)
-        params.update(
-            {
-                "lang": "en-us",
-                "usertz": get_localzone_name(),
-                "startDate": from_dt.strftime("%Y-%m-%d"),
-                "endDate": to_dt.strftime("%Y-%m-%d"),
-            }
-        )
-        req = self.session.get(self._calendar_refresh_url, params=params)
-        self.response = req.json()
+        pass
 
     def events(self, from_dt=None, to_dt=None):
         """
         Retrieves events for a given date range, by default, this month.
         """
-        self.refresh_client(from_dt, to_dt)
-        return self.response.get("Event")
+        pass
 
     def calendars(self):
         """
         Retrieves calendars of this month.
         """
-        today = datetime.today()
-        first_day, last_day = monthrange(today.year, today.month)
-        from_dt = datetime(today.year, today.month, first_day)
-        to_dt = datetime(today.year, today.month, last_day)
-        params = dict(self.params)
-        params.update(
-            {
-                "lang": "en-us",
-                "usertz": get_localzone_name(),
-                "startDate": from_dt.strftime("%Y-%m-%d"),
-                "endDate": to_dt.strftime("%Y-%m-%d"),
-            }
-        )
-        req = self.session.get(self._calendars, params=params)
-        self.response = req.json()
-        return self.response["Collection"]
+        pass

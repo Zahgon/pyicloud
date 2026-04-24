@@ -27,44 +27,17 @@ class AccountService:
     @property
     def devices(self):
         """Returns current paired devices."""
-        if not self._devices:
-            req = self.session.get(self._acc_devices_url, params=self.params)
-            response = req.json()
-
-            for device_info in response["devices"]:
-                self._devices.append(AccountDevice(device_info))
-
-        return self._devices
+        pass
 
     @property
     def family(self):
         """Returns family members."""
-        if not self._family:
-            req = self.session.get(self._acc_family_details_url, params=self.params)
-            response = req.json()
-
-            for member_info in response["familyMembers"]:
-                self._family.append(
-                    FamilyMember(
-                        member_info,
-                        self.session,
-                        self.params,
-                        self._acc_family_member_photo_url,
-                    )
-                )
-
-        return self._family
+        pass
 
     @property
     def storage(self):
         """Returns storage infos."""
-        if not self._storage:
-            req = self.session.get(self._acc_storage_url, params=self.params)
-            response = req.json()
-
-            self._storage = AccountStorage(response)
-
-        return self._storage
+        pass
 
     def __str__(self):
         return "{{devices: {}, family: {}, storage: {} bytes free}}".format(
@@ -102,90 +75,86 @@ class FamilyMember:
     @property
     def last_name(self):
         """Gets the last name."""
-        return self._attrs.get("lastName")
+        pass
 
     @property
     def dsid(self):
         """Gets the dsid."""
-        return self._attrs.get("dsid")
+        pass
 
     @property
     def original_invitation_email(self):
         """Gets the original invitation."""
-        return self._attrs.get("originalInvitationEmail")
+        pass
 
     @property
     def full_name(self):
         """Gets the full name."""
-        return self._attrs.get("fullName")
+        pass
 
     @property
     def age_classification(self):
         """Gets the age classification."""
-        return self._attrs.get("ageClassification")
+        pass
 
     @property
     def apple_id_for_purchases(self):
         """Gets the apple id for purchases."""
-        return self._attrs.get("appleIdForPurchases")
+        pass
 
     @property
     def apple_id(self):
         """Gets the apple id."""
-        return self._attrs.get("appleId")
+        pass
 
     @property
     def family_id(self):
         """Gets the family id."""
-        return self._attrs.get("familyId")
+        pass
 
     @property
     def first_name(self):
         """Gets the first name."""
-        return self._attrs.get("firstName")
+        pass
 
     @property
     def has_parental_privileges(self):
         """Has parental privileges."""
-        return self._attrs.get("hasParentalPrivileges")
+        pass
 
     @property
     def has_screen_time_enabled(self):
         """Has screen time enabled."""
-        return self._attrs.get("hasScreenTimeEnabled")
+        pass
 
     @property
     def has_ask_to_buy_enabled(self):
         """Has to ask for buying."""
-        return self._attrs.get("hasAskToBuyEnabled")
+        pass
 
     @property
     def has_share_purchases_enabled(self):
         """Has share purshases."""
-        return self._attrs.get("hasSharePurchasesEnabled")
+        pass
 
     @property
     def share_my_location_enabled_family_members(self):
         """Has share my location with family."""
-        return self._attrs.get("shareMyLocationEnabledFamilyMembers")
+        pass
 
     @property
     def has_share_my_location_enabled(self):
         """Has share my location."""
-        return self._attrs.get("hasShareMyLocationEnabled")
+        pass
 
     @property
     def dsid_for_purchases(self):
         """Gets the dsid for purchases."""
-        return self._attrs.get("dsidForPurchases")
+        pass
 
     def get_photo(self):
         """Returns the photo."""
-        params_photo = dict(self._params)
-        params_photo.update({"memberId": self.dsid})
-        return self._session.get(
-            self._acc_family_member_photo_url, params=params_photo, stream=True
-        )
+        pass
 
     def __getitem__(self, key):
         if self._attrs.get(key):
@@ -211,22 +180,22 @@ class AccountStorageUsageForMedia:
     @property
     def key(self):
         """Gets the key."""
-        return self.usage_data["mediaKey"]
+        pass
 
     @property
     def label(self):
         """Gets the label."""
-        return self.usage_data["displayLabel"]
+        pass
 
     @property
     def color(self):
         """Gets the HEX color."""
-        return self.usage_data["displayColor"]
+        pass
 
     @property
     def usage_in_bytes(self):
         """Gets the usage in bytes."""
-        return self.usage_data["usageInBytes"]
+        pass
 
     def __str__(self):
         return f"{{key: {self.key}, usage: {self.usage_in_bytes} bytes}}"
@@ -245,59 +214,57 @@ class AccountStorageUsage:
     @property
     def comp_storage_in_bytes(self):
         """Gets the comp storage in bytes."""
-        return self.usage_data["compStorageInBytes"]
+        pass
 
     @property
     def used_storage_in_bytes(self):
         """Gets the used storage in bytes."""
-        return self.usage_data["usedStorageInBytes"]
+        pass
 
     @property
     def used_storage_in_percent(self):
         """Gets the used storage in percent."""
-        return round(self.used_storage_in_bytes * 100 / self.total_storage_in_bytes, 2)
+        pass
 
     @property
     def available_storage_in_bytes(self):
         """Gets the available storage in bytes."""
-        return self.total_storage_in_bytes - self.used_storage_in_bytes
+        pass
 
     @property
     def available_storage_in_percent(self):
         """Gets the available storage in percent."""
-        return round(
-            self.available_storage_in_bytes * 100 / self.total_storage_in_bytes, 2
-        )
+        pass
 
     @property
     def total_storage_in_bytes(self):
         """Gets the total storage in bytes."""
-        return self.usage_data["totalStorageInBytes"]
+        pass
 
     @property
     def commerce_storage_in_bytes(self):
         """Gets the commerce storage in bytes."""
-        return self.usage_data["commerceStorageInBytes"]
+        pass
 
     @property
     def quota_over(self):
         """Gets the over quota."""
-        return self.quota_data["overQuota"]
+        pass
 
     @property
     def quota_tier_max(self):
         """Gets the max tier quota."""
-        return self.quota_data["haveMaxQuotaTier"]
+        pass
 
     @property
     def quota_almost_full(self):
         """Gets the almost full quota."""
-        return self.quota_data["almost-full"]
+        pass
 
     @property
     def quota_paid(self):
         """Gets the paid quota."""
-        return self.quota_data["paidQuota"]
+        pass
 
     def __str__(self):
         return "{}% used of {} bytes".format(
